@@ -1,0 +1,90 @@
+%%% test0 - casos triviais
+int INT
+double DOUBLE
+float FLOAT
+char CHAR
+' QUOTE
+" DQUOTE
+<= LE
+>= GE
+== EQ
+!= NE
+&& AND
+|| OR
+! NOT
+if IF
+then THEN
+else ELSE
+while WHILE
+%%% test1 - retorna um caractere
+* '*'
++ '+'
+- '-'
+/ '/'
+, ','
+; ';'
+( '('
+) ')'
+[ '['
+] ']'
+{ '{'
+} '}'
+< '<'
+> '>'
+= '='
+#
+%%% test2 - identificadores simples
+tmp IDF
+_titi IDF
+tmp1 IDF
+t_m_p_2 IDF
+TmP IDF
+TMP90 IDF
+t0 IDF
+t1 IDF
+t2 IDF
+t3 IDF
+t4 IDF
+t5 IDF
+t6 IDF
+t7 IDF
+t8 IDF
+t9 IDF
+t10 IDF
+t563 IDF
+t7281 IDF
+%%% test3 - identificadores menos simples.
+a_1_2_BCD_0 IDF
+a_1_2_BCD_0A IDF
+# prever algo quando NAO se deve retornar IDF
+
+%%% test4 - numeros inteiros
+0 INT_LIT
+1 INT_LIT
+2 INT_LIT
+3 INT_LIT
+4 INT_LIT
+6 INT_LIT
+7 INT_LIT
+8 INT_LIT
+9 INT_LIT
+10 INT_LIT
+67 INT_LIT
+937 INT_LIT
+1908 INT_LIT
+
+%%% test5 - numeros com virgula, casos simples
+3.14 F_LIT
+3.14e+0 F_LIT
+3.14e-1 F_LIT
+0E0
+.0E0
+3.14E+0 F_LIT
+3.14E-1 F_LIT
+0e0
+.0e0
+.0
+
+%%% test6 - numeros com virgula, casos menos simples
+3.14E-788 F_LIT
+.14e+788 F_LIT

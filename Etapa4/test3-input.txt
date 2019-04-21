@@ -1,0 +1,16 @@
+x,y:int[10:20, 30:50];
+z:float;
+x[10+10] = 10;
+y = 20;
+if(false && false) then while((x>0) && !true){
+x=0;
+}
+end
+
+
+i,n:int;
+x:double;
+x = 2.0; i=0; n=10;
+while(i <= n){
+x = x*2;  i = i+1
+}

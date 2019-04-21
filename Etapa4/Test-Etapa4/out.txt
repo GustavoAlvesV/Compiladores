@@ -1,0 +1,24 @@
+****************************************
+tmp1	:= x + tmp0
+TMP00	:= x MULT tmp2000
+TMP01	:= x MULT tmp2000
+TMP02	:= x MULT tmp2000
+TMP03	:= x MULT tmp2000
+TMP04	:= x MULT tmp2000
+****************************************
+****************************************
+TMP00	:= y_0 MULT tmp00
+TMP10	:= y_0 MULT tmp00
+TMP20	:= y_0 MULT tmp00
+****************************************
+****************************************
+tmp1	:= x + tmp0
+TMP00	:= x MULT tmp2000
+TMP01	:= x MULT tmp2000
+TMP02	:= x MULT tmp2000
+TMP03	:= x MULT tmp2000
+TMP04	:= x MULT tmp2000
+TMP00	:= y_0 MULT tmp00
+TMP10	:= y_0 MULT tmp00
+TMP20	:= y_0 MULT tmp00
+****************************************

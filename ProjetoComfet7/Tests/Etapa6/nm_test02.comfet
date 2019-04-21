@@ -1,0 +1,7 @@
+k : int;
+A: int
+k=5;
+if (k != 0) then 
+   A = k;
+   print(A)
+end

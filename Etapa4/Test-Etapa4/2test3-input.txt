@@ -1,0 +1,4 @@
+x,y:int;
+x[10+10] = 10;
+y = 20;
+if(false && false) then x = y end

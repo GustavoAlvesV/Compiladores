@@ -1,0 +1,1484 @@
+Terminais sem uso na gramática
+
+   QUOTE
+   DQUOTE
+   NE
+   BRANCO
+
+
+Estado 67 conflitos: 2 de deslocamento/redução
+Estado 95 conflitos: 2 de deslocamento/redução
+Estado 96 conflitos: 2 de deslocamento/redução
+
+
+Gramática
+
+    0 $accept: programa $end
+
+    1 programa: declaracoes acoes
+    2         | acoes
+
+    3 declaracoes: declaracao ';'
+    4            | declaracoes declaracao ';'
+
+    5 declaracao: lista_IDF ':' tipos
+
+    6 lista_IDF: lista_IDF ',' IDF
+    7          | IDF
+
+    8 tipos: tipo
+    9      | tipo '[' lista_INT
+
+   10 tipo: INT
+   11     | DOUBLE
+   12     | FLOAT
+   13     | CHAR
+
+   14 lista_INT: lista_INT ',' INT_LIT ':' INT_LIT
+   15          | lista_INT ']'
+   16          | INT_LIT ':' INT_LIT
+
+   17 acoes: acoes ';' comando
+   18      | comando
+
+   19 comando: atrib
+   20        | enun_simples
+
+   21 atrib: lvalue '=' expr
+
+   22 lvalue: IDF
+   23       | IDF '[' lista_expr
+
+   24 lista_expr: expr ',' lista_expr
+   25           | expr ']'
+
+   26 expr: termo maistermo
+
+   27 maistermo: '+' termo maistermo
+   28          | '-' termo maistermo
+   29          | '*' termo maistermo
+   30          | '/' termo maistermo
+   31          | %empty
+
+   32 termo: '(' expr ')'
+   33      | INT_LIT
+   34      | F_LIT
+   35      | lvalue
+   36      | chamada_Proced
+
+   37 chamada_Proced: IDF '(' expr proced_Expr
+
+   38 proced_Expr: ')'
+   39            | ',' expr proced_Expr
+
+   40 enun_simples: expr
+   41             | instr_Controle
+
+   42 instr_Controle: if_expr
+   43               | while_expr
+
+   44 if_expr: IF '(' bool_expr ')' THEN acoes fim_if
+
+   45 fim_if: END
+   46       | ELSE acoes END
+
+   47 while_expr: WHILE '(' bool_expr ')' '{' acoes '}'
+   48           | %empty
+
+   49 bool_expr: TRUE
+   50          | FALSE
+   51          | '(' bool_expr ')'
+   52          | bool_expr AND bool_expr
+   53          | bool_expr OR bool_expr
+   54          | NOT bool_expr
+   55          | expr '>' expr
+   56          | expr '<' expr
+   57          | expr LE expr
+   58          | expr GE expr
+   59          | expr EQ expr
+
+
+Terminais, com as regras onde eles aparecem
+
+$end (0) 0
+'(' (40) 32 37 44 47 51
+')' (41) 32 38 44 47 51
+'*' (42) 29
+'+' (43) 27
+',' (44) 6 14 24 39
+'-' (45) 28
+'/' (47) 30
+':' (58) 5 14 16
+';' (59) 3 4 17
+'<' (60) 56
+'=' (61) 21
+'>' (62) 55
+'[' (91) 9 23
+']' (93) 15 25
+'{' (123) 47
+'}' (125) 47
+error (256)
+INT (258) 10
+DOUBLE (259) 11
+FLOAT (260) 12
+CHAR (261) 13
+QUOTE (262)
+DQUOTE (263)
+LE (264) 57
+GE (265) 58
+EQ (266) 59
+NE (267)
+AND (268) 52
+OR (269) 53
+NOT (270) 54
+IF (271) 44
+THEN (272) 44
+ELSE (273) 46
+WHILE (274) 47
+BRANCO (275)
+IDF (276) 6 7 22 23 37
+F_LIT (277) 34
+INT_LIT (278) 14 16 33
+TRUE (279) 49
+FALSE (280) 50
+END (281) 45 46
+
+
+Não terminais com as regras onde eles aparecem
+
+$accept (43)
+    à esquerda: 0
+programa (44)
+    à esquerda: 1 2, à direita: 0
+declaracoes (45)
+    à esquerda: 3 4, à direita: 1 4
+declaracao (46)
+    à esquerda: 5, à direita: 3 4
+lista_IDF (47)
+    à esquerda: 6 7, à direita: 5 6
+tipos (48)
+    à esquerda: 8 9, à direita: 5
+tipo (49)
+    à esquerda: 10 11 12 13, à direita: 8 9
+lista_INT (50)
+    à esquerda: 14 15 16, à direita: 9 14 15
+acoes (51)
+    à esquerda: 17 18, à direita: 1 2 17 44 46 47
+comando (52)
+    à esquerda: 19 20, à direita: 17 18
+atrib (53)
+    à esquerda: 21, à direita: 19
+lvalue (54)
+    à esquerda: 22 23, à direita: 21 35
+lista_expr (55)
+    à esquerda: 24 25, à direita: 23 24
+expr (56)
+    à esquerda: 26, à direita: 21 24 25 32 37 39 40 55 56 57 58 59
+maistermo (57)
+    à esquerda: 27 28 29 30 31, à direita: 26 27 28 29 30
+termo (58)
+    à esquerda: 32 33 34 35 36, à direita: 26 27 28 29 30
+chamada_Proced (59)
+    à esquerda: 37, à direita: 36
+proced_Expr (60)
+    à esquerda: 38 39, à direita: 37 39
+enun_simples (61)
+    à esquerda: 40 41, à direita: 20
+instr_Controle (62)
+    à esquerda: 42 43, à direita: 41
+if_expr (63)
+    à esquerda: 44, à direita: 42
+fim_if (64)
+    à esquerda: 45 46, à direita: 44
+while_expr (65)
+    à esquerda: 47 48, à direita: 43
+bool_expr (66)
+    à esquerda: 49 50 51 52 53 54 55 56 57 58 59, à direita: 44 47
+    51 52 53 54
+
+
+Estado 0
+
+    0 $accept: . programa $end
+
+    IF       deslocar, e ir ao estado 1
+    WHILE    deslocar, e ir ao estado 2
+    IDF      deslocar, e ir ao estado 3
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    $padrão  reduzir usando a regra 48 (while_expr)
+
+    programa        ir ao estado 7
+    declaracoes     ir ao estado 8
+    declaracao      ir ao estado 9
+    lista_IDF       ir ao estado 10
+    acoes           ir ao estado 11
+    comando         ir ao estado 12
+    atrib           ir ao estado 13
+    lvalue          ir ao estado 14
+    expr            ir ao estado 15
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+    enun_simples    ir ao estado 18
+    instr_Controle  ir ao estado 19
+    if_expr         ir ao estado 20
+    while_expr      ir ao estado 21
+
+
+Estado 1
+
+   44 if_expr: IF . '(' bool_expr ')' THEN acoes fim_if
+
+    '('  deslocar, e ir ao estado 22
+
+
+Estado 2
+
+   47 while_expr: WHILE . '(' bool_expr ')' '{' acoes '}'
+
+    '('  deslocar, e ir ao estado 23
+
+
+Estado 3
+
+    7 lista_IDF: IDF .
+   22 lvalue: IDF .
+   23       | IDF . '[' lista_expr
+   37 chamada_Proced: IDF . '(' expr proced_Expr
+
+    '['  deslocar, e ir ao estado 24
+    '('  deslocar, e ir ao estado 25
+
+    ':'       reduzir usando a regra 7 (lista_IDF)
+    ','       reduzir usando a regra 7 (lista_IDF)
+    $padrão  reduzir usando a regra 22 (lvalue)
+
+
+Estado 4
+
+   34 termo: F_LIT .
+
+    $padrão  reduzir usando a regra 34 (termo)
+
+
+Estado 5
+
+   33 termo: INT_LIT .
+
+    $padrão  reduzir usando a regra 33 (termo)
+
+
+Estado 6
+
+   32 termo: '(' . expr ')'
+
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    lvalue          ir ao estado 27
+    expr            ir ao estado 28
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+
+
+Estado 7
+
+    0 $accept: programa . $end
+
+    $end  deslocar, e ir ao estado 29
+
+
+Estado 8
+
+    1 programa: declaracoes . acoes
+    4 declaracoes: declaracoes . declaracao ';'
+
+    IF       deslocar, e ir ao estado 1
+    WHILE    deslocar, e ir ao estado 2
+    IDF      deslocar, e ir ao estado 3
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    $padrão  reduzir usando a regra 48 (while_expr)
+
+    declaracao      ir ao estado 30
+    lista_IDF       ir ao estado 10
+    acoes           ir ao estado 31
+    comando         ir ao estado 12
+    atrib           ir ao estado 13
+    lvalue          ir ao estado 14
+    expr            ir ao estado 15
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+    enun_simples    ir ao estado 18
+    instr_Controle  ir ao estado 19
+    if_expr         ir ao estado 20
+    while_expr      ir ao estado 21
+
+
+Estado 9
+
+    3 declaracoes: declaracao . ';'
+
+    ';'  deslocar, e ir ao estado 32
+
+
+Estado 10
+
+    5 declaracao: lista_IDF . ':' tipos
+    6 lista_IDF: lista_IDF . ',' IDF
+
+    ':'  deslocar, e ir ao estado 33
+    ','  deslocar, e ir ao estado 34
+
+
+Estado 11
+
+    2 programa: acoes .
+   17 acoes: acoes . ';' comando
+
+    ';'  deslocar, e ir ao estado 35
+
+    $padrão  reduzir usando a regra 2 (programa)
+
+
+Estado 12
+
+   18 acoes: comando .
+
+    $padrão  reduzir usando a regra 18 (acoes)
+
+
+Estado 13
+
+   19 comando: atrib .
+
+    $padrão  reduzir usando a regra 19 (comando)
+
+
+Estado 14
+
+   21 atrib: lvalue . '=' expr
+   35 termo: lvalue .
+
+    '='  deslocar, e ir ao estado 36
+
+    $padrão  reduzir usando a regra 35 (termo)
+
+
+Estado 15
+
+   40 enun_simples: expr .
+
+    $padrão  reduzir usando a regra 40 (enun_simples)
+
+
+Estado 16
+
+   26 expr: termo . maistermo
+
+    '+'  deslocar, e ir ao estado 37
+    '-'  deslocar, e ir ao estado 38
+    '*'  deslocar, e ir ao estado 39
+    '/'  deslocar, e ir ao estado 40
+
+    $padrão  reduzir usando a regra 31 (maistermo)
+
+    maistermo  ir ao estado 41
+
+
+Estado 17
+
+   36 termo: chamada_Proced .
+
+    $padrão  reduzir usando a regra 36 (termo)
+
+
+Estado 18
+
+   20 comando: enun_simples .
+
+    $padrão  reduzir usando a regra 20 (comando)
+
+
+Estado 19
+
+   41 enun_simples: instr_Controle .
+
+    $padrão  reduzir usando a regra 41 (enun_simples)
+
+
+Estado 20
+
+   42 instr_Controle: if_expr .
+
+    $padrão  reduzir usando a regra 42 (instr_Controle)
+
+
+Estado 21
+
+   43 instr_Controle: while_expr .
+
+    $padrão  reduzir usando a regra 43 (instr_Controle)
+
+
+Estado 22
+
+   44 if_expr: IF '(' . bool_expr ')' THEN acoes fim_if
+
+    NOT      deslocar, e ir ao estado 42
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    TRUE     deslocar, e ir ao estado 43
+    FALSE    deslocar, e ir ao estado 44
+    '('      deslocar, e ir ao estado 45
+
+    lvalue          ir ao estado 27
+    expr            ir ao estado 46
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+    bool_expr       ir ao estado 47
+
+
+Estado 23
+
+   47 while_expr: WHILE '(' . bool_expr ')' '{' acoes '}'
+
+    NOT      deslocar, e ir ao estado 42
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    TRUE     deslocar, e ir ao estado 43
+    FALSE    deslocar, e ir ao estado 44
+    '('      deslocar, e ir ao estado 45
+
+    lvalue          ir ao estado 27
+    expr            ir ao estado 46
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+    bool_expr       ir ao estado 48
+
+
+Estado 24
+
+   23 lvalue: IDF '[' . lista_expr
+
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    lvalue          ir ao estado 27
+    lista_expr      ir ao estado 49
+    expr            ir ao estado 50
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+
+
+Estado 25
+
+   37 chamada_Proced: IDF '(' . expr proced_Expr
+
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    lvalue          ir ao estado 27
+    expr            ir ao estado 51
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+
+
+Estado 26
+
+   22 lvalue: IDF .
+   23       | IDF . '[' lista_expr
+   37 chamada_Proced: IDF . '(' expr proced_Expr
+
+    '['  deslocar, e ir ao estado 24
+    '('  deslocar, e ir ao estado 25
+
+    $padrão  reduzir usando a regra 22 (lvalue)
+
+
+Estado 27
+
+   35 termo: lvalue .
+
+    $padrão  reduzir usando a regra 35 (termo)
+
+
+Estado 28
+
+   32 termo: '(' expr . ')'
+
+    ')'  deslocar, e ir ao estado 52
+
+
+Estado 29
+
+    0 $accept: programa $end .
+
+    $padrão  aceitar
+
+
+Estado 30
+
+    4 declaracoes: declaracoes declaracao . ';'
+
+    ';'  deslocar, e ir ao estado 53
+
+
+Estado 31
+
+    1 programa: declaracoes acoes .
+   17 acoes: acoes . ';' comando
+
+    ';'  deslocar, e ir ao estado 35
+
+    $padrão  reduzir usando a regra 1 (programa)
+
+
+Estado 32
+
+    3 declaracoes: declaracao ';' .
+
+    $padrão  reduzir usando a regra 3 (declaracoes)
+
+
+Estado 33
+
+    5 declaracao: lista_IDF ':' . tipos
+
+    INT     deslocar, e ir ao estado 54
+    DOUBLE  deslocar, e ir ao estado 55
+    FLOAT   deslocar, e ir ao estado 56
+    CHAR    deslocar, e ir ao estado 57
+
+    tipos  ir ao estado 58
+    tipo   ir ao estado 59
+
+
+Estado 34
+
+    6 lista_IDF: lista_IDF ',' . IDF
+
+    IDF  deslocar, e ir ao estado 60
+
+
+Estado 35
+
+   17 acoes: acoes ';' . comando
+
+    IF       deslocar, e ir ao estado 1
+    WHILE    deslocar, e ir ao estado 2
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    $padrão  reduzir usando a regra 48 (while_expr)
+
+    comando         ir ao estado 61
+    atrib           ir ao estado 13
+    lvalue          ir ao estado 14
+    expr            ir ao estado 15
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+    enun_simples    ir ao estado 18
+    instr_Controle  ir ao estado 19
+    if_expr         ir ao estado 20
+    while_expr      ir ao estado 21
+
+
+Estado 36
+
+   21 atrib: lvalue '=' . expr
+
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    lvalue          ir ao estado 27
+    expr            ir ao estado 62
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+
+
+Estado 37
+
+   27 maistermo: '+' . termo maistermo
+
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    lvalue          ir ao estado 27
+    termo           ir ao estado 63
+    chamada_Proced  ir ao estado 17
+
+
+Estado 38
+
+   28 maistermo: '-' . termo maistermo
+
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    lvalue          ir ao estado 27
+    termo           ir ao estado 64
+    chamada_Proced  ir ao estado 17
+
+
+Estado 39
+
+   29 maistermo: '*' . termo maistermo
+
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    lvalue          ir ao estado 27
+    termo           ir ao estado 65
+    chamada_Proced  ir ao estado 17
+
+
+Estado 40
+
+   30 maistermo: '/' . termo maistermo
+
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    lvalue          ir ao estado 27
+    termo           ir ao estado 66
+    chamada_Proced  ir ao estado 17
+
+
+Estado 41
+
+   26 expr: termo maistermo .
+
+    $padrão  reduzir usando a regra 26 (expr)
+
+
+Estado 42
+
+   54 bool_expr: NOT . bool_expr
+
+    NOT      deslocar, e ir ao estado 42
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    TRUE     deslocar, e ir ao estado 43
+    FALSE    deslocar, e ir ao estado 44
+    '('      deslocar, e ir ao estado 45
+
+    lvalue          ir ao estado 27
+    expr            ir ao estado 46
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+    bool_expr       ir ao estado 67
+
+
+Estado 43
+
+   49 bool_expr: TRUE .
+
+    $padrão  reduzir usando a regra 49 (bool_expr)
+
+
+Estado 44
+
+   50 bool_expr: FALSE .
+
+    $padrão  reduzir usando a regra 50 (bool_expr)
+
+
+Estado 45
+
+   32 termo: '(' . expr ')'
+   51 bool_expr: '(' . bool_expr ')'
+
+    NOT      deslocar, e ir ao estado 42
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    TRUE     deslocar, e ir ao estado 43
+    FALSE    deslocar, e ir ao estado 44
+    '('      deslocar, e ir ao estado 45
+
+    lvalue          ir ao estado 27
+    expr            ir ao estado 68
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+    bool_expr       ir ao estado 69
+
+
+Estado 46
+
+   55 bool_expr: expr . '>' expr
+   56          | expr . '<' expr
+   57          | expr . LE expr
+   58          | expr . GE expr
+   59          | expr . EQ expr
+
+    LE   deslocar, e ir ao estado 70
+    GE   deslocar, e ir ao estado 71
+    EQ   deslocar, e ir ao estado 72
+    '>'  deslocar, e ir ao estado 73
+    '<'  deslocar, e ir ao estado 74
+
+
+Estado 47
+
+   44 if_expr: IF '(' bool_expr . ')' THEN acoes fim_if
+   52 bool_expr: bool_expr . AND bool_expr
+   53          | bool_expr . OR bool_expr
+
+    AND  deslocar, e ir ao estado 75
+    OR   deslocar, e ir ao estado 76
+    ')'  deslocar, e ir ao estado 77
+
+
+Estado 48
+
+   47 while_expr: WHILE '(' bool_expr . ')' '{' acoes '}'
+   52 bool_expr: bool_expr . AND bool_expr
+   53          | bool_expr . OR bool_expr
+
+    AND  deslocar, e ir ao estado 75
+    OR   deslocar, e ir ao estado 76
+    ')'  deslocar, e ir ao estado 78
+
+
+Estado 49
+
+   23 lvalue: IDF '[' lista_expr .
+
+    $padrão  reduzir usando a regra 23 (lvalue)
+
+
+Estado 50
+
+   24 lista_expr: expr . ',' lista_expr
+   25           | expr . ']'
+
+    ','  deslocar, e ir ao estado 79
+    ']'  deslocar, e ir ao estado 80
+
+
+Estado 51
+
+   37 chamada_Proced: IDF '(' expr . proced_Expr
+
+    ','  deslocar, e ir ao estado 81
+    ')'  deslocar, e ir ao estado 82
+
+    proced_Expr  ir ao estado 83
+
+
+Estado 52
+
+   32 termo: '(' expr ')' .
+
+    $padrão  reduzir usando a regra 32 (termo)
+
+
+Estado 53
+
+    4 declaracoes: declaracoes declaracao ';' .
+
+    $padrão  reduzir usando a regra 4 (declaracoes)
+
+
+Estado 54
+
+   10 tipo: INT .
+
+    $padrão  reduzir usando a regra 10 (tipo)
+
+
+Estado 55
+
+   11 tipo: DOUBLE .
+
+    $padrão  reduzir usando a regra 11 (tipo)
+
+
+Estado 56
+
+   12 tipo: FLOAT .
+
+    $padrão  reduzir usando a regra 12 (tipo)
+
+
+Estado 57
+
+   13 tipo: CHAR .
+
+    $padrão  reduzir usando a regra 13 (tipo)
+
+
+Estado 58
+
+    5 declaracao: lista_IDF ':' tipos .
+
+    $padrão  reduzir usando a regra 5 (declaracao)
+
+
+Estado 59
+
+    8 tipos: tipo .
+    9      | tipo . '[' lista_INT
+
+    '['  deslocar, e ir ao estado 84
+
+    $padrão  reduzir usando a regra 8 (tipos)
+
+
+Estado 60
+
+    6 lista_IDF: lista_IDF ',' IDF .
+
+    $padrão  reduzir usando a regra 6 (lista_IDF)
+
+
+Estado 61
+
+   17 acoes: acoes ';' comando .
+
+    $padrão  reduzir usando a regra 17 (acoes)
+
+
+Estado 62
+
+   21 atrib: lvalue '=' expr .
+
+    $padrão  reduzir usando a regra 21 (atrib)
+
+
+Estado 63
+
+   27 maistermo: '+' termo . maistermo
+
+    '+'  deslocar, e ir ao estado 37
+    '-'  deslocar, e ir ao estado 38
+    '*'  deslocar, e ir ao estado 39
+    '/'  deslocar, e ir ao estado 40
+
+    $padrão  reduzir usando a regra 31 (maistermo)
+
+    maistermo  ir ao estado 85
+
+
+Estado 64
+
+   28 maistermo: '-' termo . maistermo
+
+    '+'  deslocar, e ir ao estado 37
+    '-'  deslocar, e ir ao estado 38
+    '*'  deslocar, e ir ao estado 39
+    '/'  deslocar, e ir ao estado 40
+
+    $padrão  reduzir usando a regra 31 (maistermo)
+
+    maistermo  ir ao estado 86
+
+
+Estado 65
+
+   29 maistermo: '*' termo . maistermo
+
+    '+'  deslocar, e ir ao estado 37
+    '-'  deslocar, e ir ao estado 38
+    '*'  deslocar, e ir ao estado 39
+    '/'  deslocar, e ir ao estado 40
+
+    $padrão  reduzir usando a regra 31 (maistermo)
+
+    maistermo  ir ao estado 87
+
+
+Estado 66
+
+   30 maistermo: '/' termo . maistermo
+
+    '+'  deslocar, e ir ao estado 37
+    '-'  deslocar, e ir ao estado 38
+    '*'  deslocar, e ir ao estado 39
+    '/'  deslocar, e ir ao estado 40
+
+    $padrão  reduzir usando a regra 31 (maistermo)
+
+    maistermo  ir ao estado 88
+
+
+Estado 67
+
+   52 bool_expr: bool_expr . AND bool_expr
+   53          | bool_expr . OR bool_expr
+   54          | NOT bool_expr .
+
+    AND  deslocar, e ir ao estado 75
+    OR   deslocar, e ir ao estado 76
+
+    AND       [reduzir usando a regra 54 (bool_expr)]
+    OR        [reduzir usando a regra 54 (bool_expr)]
+    $padrão  reduzir usando a regra 54 (bool_expr)
+
+
+Estado 68
+
+   32 termo: '(' expr . ')'
+   55 bool_expr: expr . '>' expr
+   56          | expr . '<' expr
+   57          | expr . LE expr
+   58          | expr . GE expr
+   59          | expr . EQ expr
+
+    LE   deslocar, e ir ao estado 70
+    GE   deslocar, e ir ao estado 71
+    EQ   deslocar, e ir ao estado 72
+    ')'  deslocar, e ir ao estado 52
+    '>'  deslocar, e ir ao estado 73
+    '<'  deslocar, e ir ao estado 74
+
+
+Estado 69
+
+   51 bool_expr: '(' bool_expr . ')'
+   52          | bool_expr . AND bool_expr
+   53          | bool_expr . OR bool_expr
+
+    AND  deslocar, e ir ao estado 75
+    OR   deslocar, e ir ao estado 76
+    ')'  deslocar, e ir ao estado 89
+
+
+Estado 70
+
+   57 bool_expr: expr LE . expr
+
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    lvalue          ir ao estado 27
+    expr            ir ao estado 90
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+
+
+Estado 71
+
+   58 bool_expr: expr GE . expr
+
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    lvalue          ir ao estado 27
+    expr            ir ao estado 91
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+
+
+Estado 72
+
+   59 bool_expr: expr EQ . expr
+
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    lvalue          ir ao estado 27
+    expr            ir ao estado 92
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+
+
+Estado 73
+
+   55 bool_expr: expr '>' . expr
+
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    lvalue          ir ao estado 27
+    expr            ir ao estado 93
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+
+
+Estado 74
+
+   56 bool_expr: expr '<' . expr
+
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    lvalue          ir ao estado 27
+    expr            ir ao estado 94
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+
+
+Estado 75
+
+   52 bool_expr: bool_expr AND . bool_expr
+
+    NOT      deslocar, e ir ao estado 42
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    TRUE     deslocar, e ir ao estado 43
+    FALSE    deslocar, e ir ao estado 44
+    '('      deslocar, e ir ao estado 45
+
+    lvalue          ir ao estado 27
+    expr            ir ao estado 46
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+    bool_expr       ir ao estado 95
+
+
+Estado 76
+
+   53 bool_expr: bool_expr OR . bool_expr
+
+    NOT      deslocar, e ir ao estado 42
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    TRUE     deslocar, e ir ao estado 43
+    FALSE    deslocar, e ir ao estado 44
+    '('      deslocar, e ir ao estado 45
+
+    lvalue          ir ao estado 27
+    expr            ir ao estado 46
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+    bool_expr       ir ao estado 96
+
+
+Estado 77
+
+   44 if_expr: IF '(' bool_expr ')' . THEN acoes fim_if
+
+    THEN  deslocar, e ir ao estado 97
+
+
+Estado 78
+
+   47 while_expr: WHILE '(' bool_expr ')' . '{' acoes '}'
+
+    '{'  deslocar, e ir ao estado 98
+
+
+Estado 79
+
+   24 lista_expr: expr ',' . lista_expr
+
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    lvalue          ir ao estado 27
+    lista_expr      ir ao estado 99
+    expr            ir ao estado 50
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+
+
+Estado 80
+
+   25 lista_expr: expr ']' .
+
+    $padrão  reduzir usando a regra 25 (lista_expr)
+
+
+Estado 81
+
+   39 proced_Expr: ',' . expr proced_Expr
+
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    lvalue          ir ao estado 27
+    expr            ir ao estado 100
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+
+
+Estado 82
+
+   38 proced_Expr: ')' .
+
+    $padrão  reduzir usando a regra 38 (proced_Expr)
+
+
+Estado 83
+
+   37 chamada_Proced: IDF '(' expr proced_Expr .
+
+    $padrão  reduzir usando a regra 37 (chamada_Proced)
+
+
+Estado 84
+
+    9 tipos: tipo '[' . lista_INT
+
+    INT_LIT  deslocar, e ir ao estado 101
+
+    lista_INT  ir ao estado 102
+
+
+Estado 85
+
+   27 maistermo: '+' termo maistermo .
+
+    $padrão  reduzir usando a regra 27 (maistermo)
+
+
+Estado 86
+
+   28 maistermo: '-' termo maistermo .
+
+    $padrão  reduzir usando a regra 28 (maistermo)
+
+
+Estado 87
+
+   29 maistermo: '*' termo maistermo .
+
+    $padrão  reduzir usando a regra 29 (maistermo)
+
+
+Estado 88
+
+   30 maistermo: '/' termo maistermo .
+
+    $padrão  reduzir usando a regra 30 (maistermo)
+
+
+Estado 89
+
+   51 bool_expr: '(' bool_expr ')' .
+
+    $padrão  reduzir usando a regra 51 (bool_expr)
+
+
+Estado 90
+
+   57 bool_expr: expr LE expr .
+
+    $padrão  reduzir usando a regra 57 (bool_expr)
+
+
+Estado 91
+
+   58 bool_expr: expr GE expr .
+
+    $padrão  reduzir usando a regra 58 (bool_expr)
+
+
+Estado 92
+
+   59 bool_expr: expr EQ expr .
+
+    $padrão  reduzir usando a regra 59 (bool_expr)
+
+
+Estado 93
+
+   55 bool_expr: expr '>' expr .
+
+    $padrão  reduzir usando a regra 55 (bool_expr)
+
+
+Estado 94
+
+   56 bool_expr: expr '<' expr .
+
+    $padrão  reduzir usando a regra 56 (bool_expr)
+
+
+Estado 95
+
+   52 bool_expr: bool_expr . AND bool_expr
+   52          | bool_expr AND bool_expr .
+   53          | bool_expr . OR bool_expr
+
+    AND  deslocar, e ir ao estado 75
+    OR   deslocar, e ir ao estado 76
+
+    AND       [reduzir usando a regra 52 (bool_expr)]
+    OR        [reduzir usando a regra 52 (bool_expr)]
+    $padrão  reduzir usando a regra 52 (bool_expr)
+
+
+Estado 96
+
+   52 bool_expr: bool_expr . AND bool_expr
+   53          | bool_expr . OR bool_expr
+   53          | bool_expr OR bool_expr .
+
+    AND  deslocar, e ir ao estado 75
+    OR   deslocar, e ir ao estado 76
+
+    AND       [reduzir usando a regra 53 (bool_expr)]
+    OR        [reduzir usando a regra 53 (bool_expr)]
+    $padrão  reduzir usando a regra 53 (bool_expr)
+
+
+Estado 97
+
+   44 if_expr: IF '(' bool_expr ')' THEN . acoes fim_if
+
+    IF       deslocar, e ir ao estado 1
+    WHILE    deslocar, e ir ao estado 2
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    $padrão  reduzir usando a regra 48 (while_expr)
+
+    acoes           ir ao estado 103
+    comando         ir ao estado 12
+    atrib           ir ao estado 13
+    lvalue          ir ao estado 14
+    expr            ir ao estado 15
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+    enun_simples    ir ao estado 18
+    instr_Controle  ir ao estado 19
+    if_expr         ir ao estado 20
+    while_expr      ir ao estado 21
+
+
+Estado 98
+
+   47 while_expr: WHILE '(' bool_expr ')' '{' . acoes '}'
+
+    IF       deslocar, e ir ao estado 1
+    WHILE    deslocar, e ir ao estado 2
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    $padrão  reduzir usando a regra 48 (while_expr)
+
+    acoes           ir ao estado 104
+    comando         ir ao estado 12
+    atrib           ir ao estado 13
+    lvalue          ir ao estado 14
+    expr            ir ao estado 15
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+    enun_simples    ir ao estado 18
+    instr_Controle  ir ao estado 19
+    if_expr         ir ao estado 20
+    while_expr      ir ao estado 21
+
+
+Estado 99
+
+   24 lista_expr: expr ',' lista_expr .
+
+    $padrão  reduzir usando a regra 24 (lista_expr)
+
+
+Estado 100
+
+   39 proced_Expr: ',' expr . proced_Expr
+
+    ','  deslocar, e ir ao estado 81
+    ')'  deslocar, e ir ao estado 82
+
+    proced_Expr  ir ao estado 105
+
+
+Estado 101
+
+   16 lista_INT: INT_LIT . ':' INT_LIT
+
+    ':'  deslocar, e ir ao estado 106
+
+
+Estado 102
+
+    9 tipos: tipo '[' lista_INT .
+   14 lista_INT: lista_INT . ',' INT_LIT ':' INT_LIT
+   15          | lista_INT . ']'
+
+    ','  deslocar, e ir ao estado 107
+    ']'  deslocar, e ir ao estado 108
+
+    $padrão  reduzir usando a regra 9 (tipos)
+
+
+Estado 103
+
+   17 acoes: acoes . ';' comando
+   44 if_expr: IF '(' bool_expr ')' THEN acoes . fim_if
+
+    ELSE  deslocar, e ir ao estado 109
+    END   deslocar, e ir ao estado 110
+    ';'   deslocar, e ir ao estado 35
+
+    fim_if  ir ao estado 111
+
+
+Estado 104
+
+   17 acoes: acoes . ';' comando
+   47 while_expr: WHILE '(' bool_expr ')' '{' acoes . '}'
+
+    ';'  deslocar, e ir ao estado 35
+    '}'  deslocar, e ir ao estado 112
+
+
+Estado 105
+
+   39 proced_Expr: ',' expr proced_Expr .
+
+    $padrão  reduzir usando a regra 39 (proced_Expr)
+
+
+Estado 106
+
+   16 lista_INT: INT_LIT ':' . INT_LIT
+
+    INT_LIT  deslocar, e ir ao estado 113
+
+
+Estado 107
+
+   14 lista_INT: lista_INT ',' . INT_LIT ':' INT_LIT
+
+    INT_LIT  deslocar, e ir ao estado 114
+
+
+Estado 108
+
+   15 lista_INT: lista_INT ']' .
+
+    $padrão  reduzir usando a regra 15 (lista_INT)
+
+
+Estado 109
+
+   46 fim_if: ELSE . acoes END
+
+    IF       deslocar, e ir ao estado 1
+    WHILE    deslocar, e ir ao estado 2
+    IDF      deslocar, e ir ao estado 26
+    F_LIT    deslocar, e ir ao estado 4
+    INT_LIT  deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+
+    $padrão  reduzir usando a regra 48 (while_expr)
+
+    acoes           ir ao estado 115
+    comando         ir ao estado 12
+    atrib           ir ao estado 13
+    lvalue          ir ao estado 14
+    expr            ir ao estado 15
+    termo           ir ao estado 16
+    chamada_Proced  ir ao estado 17
+    enun_simples    ir ao estado 18
+    instr_Controle  ir ao estado 19
+    if_expr         ir ao estado 20
+    while_expr      ir ao estado 21
+
+
+Estado 110
+
+   45 fim_if: END .
+
+    $padrão  reduzir usando a regra 45 (fim_if)
+
+
+Estado 111
+
+   44 if_expr: IF '(' bool_expr ')' THEN acoes fim_if .
+
+    $padrão  reduzir usando a regra 44 (if_expr)
+
+
+Estado 112
+
+   47 while_expr: WHILE '(' bool_expr ')' '{' acoes '}' .
+
+    $padrão  reduzir usando a regra 47 (while_expr)
+
+
+Estado 113
+
+   16 lista_INT: INT_LIT ':' INT_LIT .
+
+    $padrão  reduzir usando a regra 16 (lista_INT)
+
+
+Estado 114
+
+   14 lista_INT: lista_INT ',' INT_LIT . ':' INT_LIT
+
+    ':'  deslocar, e ir ao estado 116
+
+
+Estado 115
+
+   17 acoes: acoes . ';' comando
+   46 fim_if: ELSE acoes . END
+
+    END  deslocar, e ir ao estado 117
+    ';'  deslocar, e ir ao estado 35
+
+
+Estado 116
+
+   14 lista_INT: lista_INT ',' INT_LIT ':' . INT_LIT
+
+    INT_LIT  deslocar, e ir ao estado 118
+
+
+Estado 117
+
+   46 fim_if: ELSE acoes END .
+
+    $padrão  reduzir usando a regra 46 (fim_if)
+
+
+Estado 118
+
+   14 lista_INT: lista_INT ',' INT_LIT ':' INT_LIT .
+
+    $padrão  reduzir usando a regra 14 (lista_INT)

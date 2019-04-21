@@ -1,0 +1,9 @@
+k : int;
+A: int
+k=2;
+if (k == 1) then 
+   A = 3
+else
+   A = k
+end ;
+print(A)
